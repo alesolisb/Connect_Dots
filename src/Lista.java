@@ -28,6 +28,37 @@ public class Lista {
         }
         this.size++;
     }
+    public void insertLast(Object data){
+        Nodo nodo = new Nodo(data);
+        if (this.isEmpty()){
+            this.head = this.last=nodo;
+        }else{
+            nodo.setPrev(this.last);
+            this.last.setNext(nodo);
+            this.last=nodo;
+        }
+        this.size++;
+    }
+    public void insertIndex(Object data,int x){
+        Nodo current = this.head;
+        Nodo prev = this.head;
+        Nodo nodo = new Nodo(data);
+        if (x==0){
+            this.insetFirst(data);
+        } else if (x>=this.size-1) {
+            this.insertLast(data);
+        } else {
+            for (int i = 0; i < x; i++) {
+                prev = current;
+                current = current.getNext();
+            }
+            nodo.setNext(current.next);
+            nodo.next.setPrev(nodo);
+            nodo.setPrev(current);
+            current.setNext(nodo);
+        }
+        this.size++;
+    }
     public Nodo deleteFirst(){
         if (this.head !=null){
             Nodo temp = this.head;
@@ -46,22 +77,8 @@ public class Lista {
             return temp;
         }else{return null;}
     }
-    public void displayList(){
-        Nodo current = this.head;
-        while (current!=null){
-            System.out.println(current.getData());
-            current = current.getNext();
-        }
-    }
-    public Nodo find(Object x){
-        Nodo current = this.head;
-        while (current !=null){
-            if (current.getData().equals(x)){
-                return current;
-            } else{current=current.getNext();}
-        }
-        return null;
-    }
+
+
     public Nodo deleteValue(Object x){
         Nodo current = this.head;
         Nodo prev= this.head;
@@ -97,35 +114,45 @@ public class Lista {
             return current;
         }
     }
-    public void insertLast(Object data){
-        Nodo nodo = new Nodo(data);
-        if (this.isEmpty()){
-            this.head = this.last=nodo;
-        }else{
-            nodo.setPrev(this.last);
-            this.last.setNext(nodo);
-            this.last=nodo;
-        }
-        this.size++;
-    }
-    public void insertIndex(Object data,int x){
+
+    public Object getValue(int index){
         Nodo current = this.head;
-        Nodo prev = this.head;
-        Nodo nodo = new Nodo(data);
-        if (x==0){
-            this.insetFirst(data);
-        } else if (x>=this.size-1) {
-            this.insertLast(data);
-        } else {
-            for (int i = 0; i < x; i++) {
-                prev = current;
-                current = current.getNext();
+        for (int i =0; i<this.size; i++){
+            if (i==index){
+                return current.getData();
+            }else{
+                current=current.getNext();
             }
-            nodo.setNext(current.next);
-            nodo.next.setPrev(nodo);
-            nodo.setPrev(current);
-            current.setNext(nodo);
         }
-        this.size++;
+        return null;
+    }
+
+    public int getIndex(Object value) {
+        Nodo current = this.head;
+        for (int i =0; i<this.size; i++){
+            if (current.getData().equals(value)){
+                return i;
+            }else{
+                current=current.getNext();
+            }
+        }
+        return -1;
+    }
+
+    public Nodo find(Object x){
+        Nodo current = this.head;
+        while (current !=null){
+            if (current.getData().equals(x)){
+                return current;
+            } else{current=current.getNext();}
+        }
+        return null;
+    }
+    public void displayList(){
+        Nodo current = this.head;
+        while (current!=null){
+            System.out.println(current.getData());
+            current = current.getNext();
+        }
     }
 }
