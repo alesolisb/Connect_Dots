@@ -11,15 +11,13 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
      Grid gridPanel;
      JLabel titulo,p1,p2,p3,p4;
 
-
-
-
      Cliente(){
          this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          this.setTitle("Connect Dots");
          this.setLayout(null);
          this.setResizable(false);
          this.setSize(WIDTH, HEIGHT);
+
 
          infoPanel=new JPanel(new FlowLayout());
          //infoPanel.setSize(new Dimension(WIDTH,HEIGHT-WIDTH));
@@ -35,6 +33,7 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
 
     }
 

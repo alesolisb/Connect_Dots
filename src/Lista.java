@@ -1,22 +1,20 @@
-import javax.management.StandardEmitterMBean;
+import java.util.ArrayList;
 
-public class Lista {
-    private Nodo head;
-    private Nodo last;
-    private int size;
+public class Lista<T> extends Nodo<T>{
+    protected Nodo<T> head;
+    protected Nodo<T> last;
+    protected int size;
 
     public Lista(){
         this.head = null;
+        this.last=null;
         this.size= 0;
     }
-    public boolean isEmpty(){
-        return this.head==null;
-    }
-    public int getSize(){
-        return this.size;
-    }
-    public void insetFirst(Object data){
-        Nodo nodo = new Nodo(data);
+
+    public boolean isEmpty(){return this.head==null;}
+    public int getSize(){return this.size;}
+    public void insertFirst(T data){
+        Nodo<T> nodo = new Nodo<>(data);
         if (this.isEmpty()){
             this.head = this.last = nodo;
             nodo.setPrev(null);
@@ -28,8 +26,8 @@ public class Lista {
         }
         this.size++;
     }
-    public void insertLast(Object data){
-        Nodo nodo = new Nodo(data);
+    public void insertLast(T data){
+        Nodo<T> nodo = new Nodo<>(data);
         if (this.isEmpty()){
             this.head = this.last=nodo;
         }else{
@@ -39,12 +37,12 @@ public class Lista {
         }
         this.size++;
     }
-    public void insertIndex(Object data,int x){
-        Nodo current = this.head;
-        Nodo prev = this.head;
-        Nodo nodo = new Nodo(data);
+    public void insertIndex(T data,int x){
+        Nodo<T> current = this.head;
+        Nodo<T> prev = this.head;
+        Nodo<T> nodo = new Nodo<>(data);
         if (x==0){
-            this.insetFirst(data);
+            this.insertFirst(data);
         } else if (x>=this.size-1) {
             this.insertLast(data);
         } else {
@@ -59,18 +57,18 @@ public class Lista {
         }
         this.size++;
     }
-    public Nodo deleteFirst(){
+    public Nodo<T> deleteFirst(){
         if (this.head !=null){
-            Nodo temp = this.head;
+            Nodo<T> temp = this.head;
             this.head = this.head.next;
             this.head.setPrev(null);
             this.size--;
             return temp;
         } else{return null;}
     }
-    public Nodo deleteLast(){
+    public Nodo<T> deleteLast(){
         if (this.head!=null){
-            Nodo temp = this.last;
+            Nodo<T> temp = this.last;
             this.last= this.last.getPrev();
             this.last.setNext(null);
             this.size--;
@@ -79,9 +77,9 @@ public class Lista {
     }
 
 
-    public Nodo deleteValue(Object x){
-        Nodo current = this.head;
-        Nodo prev= this.head;
+    public Nodo<T> deleteValue(Object x){
+        Nodo<T> current = this.head;
+        Nodo<T> prev= this.head;
         while(current !=null){
             if (current.getData().equals(x)){
                 if (current==this.head){
@@ -95,9 +93,9 @@ public class Lista {
         }
         return null;
     }
-    public Nodo deleteIndex(int x){
-        Nodo current = this.head;
-        Nodo prev = this.head;
+    public Nodo<T> deleteIndex(int x){
+        Nodo<T> current = this.head;
+        Nodo<T> prev = this.head;
         if (x==0){
             return this.deleteFirst();
         } else if (x>this.size-1) {
@@ -115,8 +113,8 @@ public class Lista {
         }
     }
 
-    public Object getValue(int index){
-        Nodo current = this.head;
+    public T getValue(int index){
+        Nodo<T> current = this.head;
         for (int i =0; i<this.size; i++){
             if (i==index){
                 return current.getData();
@@ -126,9 +124,24 @@ public class Lista {
         }
         return null;
     }
+    public Nodo<T> getNodo(int index){
+        Nodo<T> current = this.head;
+        for (int i =0; i<this.size; i++){
+            if (i==index){
+                return current;
+            }else{
+                current=current.getNext();
+            }
+        }
+        return null;
+
+    }
+    public Nodo<T> getHead(){
+        return this.head;
+    }
 
     public int getIndex(Object value) {
-        Nodo current = this.head;
+        Nodo<T> current = this.head;
         for (int i =0; i<this.size; i++){
             if (current.getData().equals(value)){
                 return i;
@@ -139,8 +152,8 @@ public class Lista {
         return -1;
     }
 
-    public Nodo find(Object x){
-        Nodo current = this.head;
+    public Nodo<T> find(Object x){
+        Nodo<T> current = this.head;
         while (current !=null){
             if (current.getData().equals(x)){
                 return current;
@@ -149,10 +162,11 @@ public class Lista {
         return null;
     }
     public void displayList(){
-        Nodo current = this.head;
+        Nodo<T> current = this.head;
         while (current!=null){
             System.out.println(current.getData());
             current = current.getNext();
         }
     }
+//    ArrayList<String> a = new ArrayList<>();
 }
