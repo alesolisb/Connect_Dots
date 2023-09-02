@@ -7,7 +7,7 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
      final int WIDTH = 900;
      final int HEIGHT= 1000;
      JPanel infoPanel;
-
+     Player p;
      Grid gridPanel;
      JLabel titulo,p1,p2,p3,p4;
 
@@ -17,6 +17,9 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
          this.setLayout(null);
          this.setResizable(false);
          this.setSize(WIDTH, HEIGHT);
+
+
+         p=new Player("Ale",Color.BLUE);
 
 
          infoPanel=new JPanel(new FlowLayout());

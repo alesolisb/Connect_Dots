@@ -8,11 +8,39 @@ public class Linea {
     public int x1;
     public int y1;
 
-    Linea(char pos, int x0, int y0, int x1, int y1){
+    Linea(char pos, int row, int col){
         this.owner= null;
         this.isOwned= false;
         this.isMarked=false;
         this.pos=pos;
+
+        switch (pos){
+            case 't':
+                this.x0= (col*80)+3;
+                this.y0= (row*80)+3;
+                this.x1=this.x0+80;
+                this.y1=this.y0;
+                break;
+            case 'b':
+                this.x0= (col*80)+3;
+                this.y0= (row*80)+80+3;
+                this.x1=this.x0+80;
+                this.y1=this.y0;
+                break;
+            case 'l':
+                this.x0= (col*80)+3;
+                this.y0= (row*80)+3;
+                this.x1=this.x0;
+                this.y1=this.y0+80;
+                break;
+            case 'r':
+                this.x0= (col*80)+80+3;
+                this.y0= (row*80)+3;
+                this.x1=this.x0;
+                this.y1=this.y0+80;
+                break;
+
+        }
     }
 
     public Player getOwner(){return this.owner;}

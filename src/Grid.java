@@ -41,12 +41,26 @@ public class Grid extends JPanel implements MouseListener {
                 g2d.fillRect((80*j),(80*i),6,6);
             }
         }
-        g2d.setPaint(Color.red);
-    }
-    public void drawLine(Linea linea, Color color){
-        // TODO
+        g2d.setPaint(Color.BLUE);
+        g2d.setStroke(new BasicStroke(6));
+        for (int i=1; i<(matriz.getSize()+1);i++){
+            for (int j = 1; j < 10; j++) {
+                Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
+                if (cuad.isOwned()) {
+                    g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
+                    g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
+                    g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
+                    g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
+                }
+            }
 
+        }
     }
+    /*public void drawLine(Linea linea, Color color){
+        Graphics2D g2d = (Graphics2D)
+        g2d.setPaint(Color.black);
+        g2d.setStroke(new BasicStroke(1));
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent e) {
