@@ -56,12 +56,15 @@ public class Grid extends JPanel implements MouseListener {
 
         }
     }
-    /*public void drawLine(Linea linea, Color color){
-        Graphics2D g2d = (Graphics2D)
-        g2d.setPaint(Color.black);
-        g2d.setStroke(new BasicStroke(1));
-    }*/
-
+    public void drawLine(Linea linea, Color color) {
+        Graphics g = getGraphics();
+        if (g instanceof Graphics2D) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setPaint(color);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
+        }
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("("+e.getX()+","+e.getY()+")");
