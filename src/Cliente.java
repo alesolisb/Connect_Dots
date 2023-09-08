@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Cliente extends JFrame implements MouseListener,Runnable {
+public class Cliente extends JFrame implements MouseListener, KeyListener,Runnable {
      final int WIDTH = 900;
      final int HEIGHT= 1000;
      JPanel infoPanel;
@@ -17,6 +19,7 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
          this.setLayout(null);
          this.setResizable(false);
          this.setSize(WIDTH, HEIGHT);
+         this.addKeyListener(this);
 
 
          p=new Player("Ale",Color.BLUE);
@@ -62,6 +65,37 @@ public class Cliente extends JFrame implements MouseListener,Runnable {
 
     @Override
     public void run() {
+
+    }
+
+
+
+    /*
+    w       87
+    a       65
+    s       83
+    d       68
+    up      38
+    left    37
+    down    40
+    right   39
+    enter   10
+    space   32
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+//        System.out.println(e.getKeyChar()+"  "+ e.getKeyCode());
+        gridPanel.navegar(e.getKeyCode());
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }

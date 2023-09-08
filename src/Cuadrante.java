@@ -1,25 +1,48 @@
 public class Cuadrante extends Nodo<Cuadrante>{
     public int row;
     public int col;
+    protected Cuadrante next;
+    protected Cuadrante prev;
     public Linea top;
     public Linea bot;
     public Linea left;
     public Linea right;
+    public Linea marked;
     public Player owner;
     public boolean isOwned;
-     Cuadrante(int row, int col){
-         super();
-         this.next=null;
-         this.prev=null;
+    Cuadrante(int row, int col){
+         this.next = null;
+         this.prev = null;
          this.row = row;
          this.col = col;
-         this.top = new Linea('t',this.row,this.col);
-         this.bot =  new Linea('b',this.row,this.col);
-         this.left =  new Linea('l',this.row,this.col);
-         this.right =  new Linea('r',this.row,this.col);
+         this.top = new Linea(2,this.row,this.col);
+         this.bot = new Linea(3,this.row,this.col);
+         this.left = new Linea(1,this.row,this.col);
+         this.right = new Linea(4,this.row,this.col);
          this.owner = null;
+         this.marked = null;
          this.isOwned = false;
-     }
+    }
+
+    public Linea getTop() {
+        return this.top;
+    }
+
+    public Linea getBot() {
+        return this.bot;
+    }
+
+    public Linea getLeft() {
+        return this.left;
+    }
+
+    public Linea getRight() {
+        return this.right;
+    }
+
+    public Linea getMarked() {
+        return this.marked;
+    }
 
     public int getRow() {
         return row;
@@ -56,5 +79,12 @@ public class Cuadrante extends Nodo<Cuadrante>{
     public String getCoords(){
          return "("+this.row+","+this.col+")";
      }
+//    public Cuadrante getNext() {return this.next;}
+
+    public void setNext(Cuadrante nodo) {this.next = nodo;}
+
+//    public Cuadrante getPrev() {return this.prev;}
+
+    public void setPrev(Cuadrante prev) {this.prev = prev;}
 
 }

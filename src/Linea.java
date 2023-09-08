@@ -1,45 +1,49 @@
-public class Linea {
+import java.awt.*;
+
+public class Linea{
     public Player owner;
     public boolean isOwned;
     public boolean isMarked;
-    public char pos; // 't', 'b', 'l', 'r'
+    public int pos; // 1=left, 2=top, 3=bot, 4=right
+    public int row;
+    public int col;
     public int x0;
     public int y0;
     public int x1;
     public int y1;
 
-    Linea(char pos, int row, int col){
+    Linea(int pos, int row, int col){
         this.owner= null;
         this.isOwned= false;
         this.isMarked=false;
         this.pos=pos;
-
+        this.row=row;
+        this.col=col;
         switch (pos){
-            case 't':
+            case 2:
                 this.x0= (col*80)+3;
                 this.y0= (row*80)+3;
                 this.x1=this.x0+80;
                 this.y1=this.y0;
                 break;
-            case 'b':
+            case 3:
                 this.x0= (col*80)+3;
                 this.y0= (row*80)+80+3;
                 this.x1=this.x0+80;
                 this.y1=this.y0;
                 break;
-            case 'l':
+            case 1:
                 this.x0= (col*80)+3;
                 this.y0= (row*80)+3;
                 this.x1=this.x0;
                 this.y1=this.y0+80;
                 break;
-            case 'r':
+            case 4:
                 this.x0= (col*80)+80+3;
                 this.y0= (row*80)+3;
                 this.x1=this.x0;
                 this.y1=this.y0+80;
                 break;
-
         }
     }
 
@@ -63,7 +67,7 @@ public class Linea {
         return isMarked;
     }
 
-    public char getPos() {
+    public int getPos() {
         return pos;
     }
 
