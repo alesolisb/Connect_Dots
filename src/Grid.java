@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Grid extends JPanel implements Runnable{
+public class Grid extends JPanel{
     public Lista<Lista<Cuadrante>> matriz;
     public Nodo<Cuadrante> marca;
     public Nodo<Lista<Cuadrante>> marcaRow;
@@ -46,8 +46,8 @@ public class Grid extends JPanel implements Runnable{
             System.out.print("\n");
         }*/
         marcaRow = matriz.getHead();
-        marca= marcaRow.getData().getHead();
-        marcaPos=1;
+        marca = marcaRow.getData().getHead();
+        marcaPos = 1;
 
         /*for (int i=1; i<(matriz.getSize()+1);i++){
             marca= marcaRow.getData().getHead();
@@ -61,37 +61,39 @@ public class Grid extends JPanel implements Runnable{
         }*/
 
         //System.out.println(String.format("%d %d %d",marca.getData().getCol(),marca.getData().getRow(),marcaPos));
-
-        Thread actualizacion =  new Thread(this);
-        actualizacion.start();
     }
     @Override
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setPaintMode();
+        g2d.setBackground(Color.WHITE);
+        g2d.setPaint(Color.BLUE);
+        g2d.setStroke(new BasicStroke(6));
+        for (int i=1; i<(matriz.getSize()+1);i++){
+            for (int j = 1; j < 10; j++) {
+                Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
+                //Cuadrante cuad = marca.getData();
+                if (cuad.getTop().isOwned()) {
+                    g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
+                } if (cuad.getBot().isOwned()) {
+                    g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
+                } if (cuad.getLeft().isOwned()) {
+                    g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
+                } if (cuad.getRight().isOwned()) {
+                    g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
+                }
+            }
+        }
         g2d.setPaint(Color.black);
         g2d.setStroke(new BasicStroke(1));
-        g2d.clearRect(0,0,WIDTH,HEIGHT);
+        g2d.drawRect(0,0,WIDTH,HEIGHT);
         for (int i=1; i<=10;i++){
             for (int j = 1; j <= 10; j++) {
                 g2d.fillRect((80*j),(80*i),6,6);
             }
         }
-        g2d.setPaint(Color.BLUE);
-        g2d.setStroke(new BasicStroke(6));
-        /*for (int i=1; i<(matriz.getSize()+1);i++){
-            for (int j = 1; j < 10; j++) {
-                Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
-                if (cuad.marked==cuad.top) {
-                    g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
-                } if (cuad.marked==cuad.bot) {
-                    g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
-                } if (cuad.marked==cuad.left) {
-                    g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
-                } if (cuad.marked==cuad.right) {
-                    g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
-                }
-            }
-        }*/
+
+        g2d.dispose();
 
     }
     public void mark(Cuadrante cuad,int side, Color color){
@@ -114,17 +116,18 @@ public class Grid extends JPanel implements Runnable{
                 cuad.marked=cuad.right;
                 break;
         }
-        drawLine(cuad.marked, color);
+        //drawLine(cuad.marked, color);
+        paintComponent(this.getGraphics());
         update(this.getGraphics());
-        //repaint();
 
 
     }
     public void paintComponent(Graphics g){
-        Linea linea = marca.getData().getMarked();
         super.paintComponent(g);
-        Graphics2D g2d =(Graphics2D) getGraphics();
+        Linea linea = marca.getData().getMarked();
+        Graphics2D g2d =(Graphics2D) this.getGraphics();
         g2d.setColor(Color.CYAN);
+        g2d.setStroke(new BasicStroke(6));
         g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
 
     }
@@ -208,18 +211,20 @@ public class Grid extends JPanel implements Runnable{
                 }
             }
             case 10, 32 -> {
-                System.out.println("Seleccionar");
+                //System.out.println("Seleccionar");
+                Cuadrante cuad = marca.getData();
+                switch (marcaPos) {
+                    case 1 -> cuad.getLeft().setOwned(true);
+                    case 2 -> cuad.getTop().setOwned(true);
+                    case 3 -> cuad.getBot().setOwned(true);
+                    case 4 -> cuad.getRight().setOwned(true);
+                }
+
+//                marca.getData().getMarked();
             }
 //
         }
         //System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
         mark(marca.getData(), marcaPos, Color.CYAN);
-    }
-    @Override
-    public void run() {
-        System.out.println("asrjnsj nadj");
-        //update(this.getGraphics());
-        //repaint();
-
     }
 }

@@ -19,31 +19,31 @@ public class Linea{
         this.pos=pos;
         this.row=row;
         this.col=col;
-        switch (pos){
-            case 2:
-                this.x0= (col*80)+3;
-                this.y0= (row*80)+3;
-                this.x1=this.x0+80;
-                this.y1=this.y0;
-                break;
-            case 3:
-                this.x0= (col*80)+3;
-                this.y0= (row*80)+80+3;
-                this.x1=this.x0+80;
-                this.y1=this.y0;
-                break;
-            case 1:
-                this.x0= (col*80)+3;
-                this.y0= (row*80)+3;
-                this.x1=this.x0;
-                this.y1=this.y0+80;
-                break;
-            case 4:
-                this.x0= (col*80)+80+3;
-                this.y0= (row*80)+3;
-                this.x1=this.x0;
-                this.y1=this.y0+80;
-                break;
+        switch (pos) {
+            case 2 -> {
+                this.x0 = (col * 80) + 3;
+                this.y0 = (row * 80) + 3;
+                this.x1 = this.x0 + 80;
+                this.y1 = this.y0;
+            }
+            case 3 -> {
+                this.x0 = (col * 80) + 3;
+                this.y0 = (row * 80) + 80 + 3;
+                this.x1 = this.x0 + 80;
+                this.y1 = this.y0;
+            }
+            case 1 -> {
+                this.x0 = (col * 80) + 3;
+                this.y0 = (row * 80) + 3;
+                this.x1 = this.x0;
+                this.y1 = this.y0 + 80;
+            }
+            case 4 -> {
+                this.x0 = (col * 80) + 80 + 3;
+                this.y0 = (row * 80) + 3;
+                this.x1 = this.x0;
+                this.y1 = this.y0 + 80;
+            }
         }
     }
 
