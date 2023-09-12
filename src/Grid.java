@@ -3,45 +3,74 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Grid extends JPanel implements MouseListener {
+public class Grid extends JPanel implements Runnable{
     public Lista<Lista<Cuadrante>> matriz;
-    public Lista<Cuadrante> r1,r2,r3,r4,r5,r6,r7,r8,r9;
-    public Cuadrante marca;
+    public Nodo<Cuadrante> marca;
+    public Nodo<Lista<Cuadrante>> marcaRow;
     public int marcaPos;
     Grid(int x, int y, int width, int height){
         this.setLayout(new GridLayout(10,10));
         this.setBounds(x,y,width,height);
         this.setBackground(Color.white);
-        this.addMouseListener(this);
         matriz = new Lista<>();
-        matriz.insertLast(r1 = new Lista<>());
-        matriz.insertLast(r2 = new Lista<>());
-        matriz.insertLast(r3 = new Lista<>());
-        matriz.insertLast(r4 = new Lista<>());
-        matriz.insertLast(r5 = new Lista<>());
-        matriz.insertLast(r6 = new Lista<>());
-        matriz.insertLast(r7 = new Lista<>());
-        matriz.insertLast(r8 = new Lista<>());
-        matriz.insertLast(r9 = new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
+        matriz.insertLast(new Lista<>());
 
         for (int i=1; i<(matriz.getSize()+1);i++){
             for (int j = 1; j < 10; j++) {
                 Lista<Cuadrante> row = matriz.getNodo(i-1).getData();
                 row.insertLast(new Cuadrante(i,j));
-                System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getData().getCoords());
+                //System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getData().getCoords()+" ");
+            }
+            //System.out.print("\n\n");
+        }
+
+        /*for (int i=1; i<(matriz.getSize()+1);i++){
+            for (int j = 1; j < 9; j++) {
+                System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getNext().getData().getCoords()+" ");
             }
             System.out.print("\n");
         }
 
-        marca=matriz.getHead().getData().getHead().getData();
+        for (int i=1; i<(matriz.getSize()+1);i++){
+            for (int j = 2; j < 10; j++) {
+                System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getPrev().getData().getCoords()+" ");
+            }
+            System.out.print("\n");
+        }*/
+        marcaRow = matriz.getHead();
+        marca= marcaRow.getData().getHead();
         marcaPos=1;
-        System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
+
+        /*for (int i=1; i<(matriz.getSize()+1);i++){
+            marca= marcaRow.getData().getHead();
+            for (int j = 1; j < 10; j++) {
+                System.out.print(marca.getData().getCoords() + "  ");
+                marca=marca.getNext();
+            }
+            System.out.print("\n");
+            marcaRow = marcaRow.getNext();
+
+        }*/
+
+        //System.out.println(String.format("%d %d %d",marca.getData().getCol(),marca.getData().getRow(),marcaPos));
+
+        Thread actualizacion =  new Thread(this);
+        actualizacion.start();
     }
     @Override
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setPaint(Color.black);
         g2d.setStroke(new BasicStroke(1));
+        g2d.clearRect(0,0,WIDTH,HEIGHT);
         for (int i=1; i<=10;i++){
             for (int j = 1; j <= 10; j++) {
                 g2d.fillRect((80*j),(80*i),6,6);
@@ -49,7 +78,7 @@ public class Grid extends JPanel implements MouseListener {
         }
         g2d.setPaint(Color.BLUE);
         g2d.setStroke(new BasicStroke(6));
-        for (int i=1; i<(matriz.getSize()+1);i++){
+        /*for (int i=1; i<(matriz.getSize()+1);i++){
             for (int j = 1; j < 10; j++) {
                 Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
                 if (cuad.marked==cuad.top) {
@@ -60,10 +89,9 @@ public class Grid extends JPanel implements MouseListener {
                     g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
                 } if (cuad.marked==cuad.right) {
                     g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
-
                 }
             }
-        }
+        }*/
 
     }
     public void mark(Cuadrante cuad,int side, Color color){
@@ -87,14 +115,22 @@ public class Grid extends JPanel implements MouseListener {
                 break;
         }
         drawLine(cuad.marked, color);
-//        this.repaint();
+        update(this.getGraphics());
+        //repaint();
 
+
+    }
+    public void paintComponent(Graphics g){
+        Linea linea = marca.getData().getMarked();
+        super.paintComponent(g);
+        Graphics2D g2d =(Graphics2D) getGraphics();
+        g2d.setColor(Color.CYAN);
+        g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
 
     }
     public void drawLine(Linea linea, Color color) {
         Graphics g = getGraphics();
-        if (g instanceof Graphics2D) {
-            Graphics2D g2d = (Graphics2D) g;
+        if (g instanceof Graphics2D g2d) {
             g2d.setPaint(color);
             g2d.setStroke(new BasicStroke(6));
             g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
@@ -113,73 +149,77 @@ public class Grid extends JPanel implements MouseListener {
     enter   10
     space   32
      */
-    public void navegar(int key){
-        switch (key){
-            case 87: case 38:
+    public void navegar(int key) {
+
+        switch (key) {
+            case 87, 38 -> {
 //                System.out.println("Arriba");
-                if (marcaPos==1){
-                    marcaPos=2;
-                } else if (marca.row!=1) {
-                    marcaPos=1;
-                    marca=matriz.getNodo(marca.row-2).getData().getNodo(marca.col-1).getData();
+                if ((marca.getData().getRow() >= 1)) {
+                    if ((marcaPos == 4) && (marca.getData().getRow() > 1) && (marca.getData().getCol() == 9)) {
+                        marcaRow = marcaRow.getPrev();
+                        int marcaCol = marca.getData().getCol();
+                        marca = marcaRow.getData().getNodo(marcaCol - 1);
+                    } else if (marcaPos != 2) {
+                        marcaPos = 2;
+                    } else if (marca.getData().getRow() == 1) {
+                        marcaPos = 2;
+                    } else if (marcaPos != 1) {
+                        marcaPos = 1;
+                        marcaRow = marcaRow.getPrev();
+                        int marcaCol = marca.getData().getCol();
+                        marca = marcaRow.getData().getNodo(marcaCol - 1);
+                    }
                 }
-                break;
-            case 65: case 37:
+            }
+            case 65, 37 -> {
 //                System.out.println("Izquierda");
-                if (marca.col!=1){
-                    marca=(Cuadrante) marca.getPrev();
+                if (marcaPos == 4) {
+                    marcaPos = 1;
+                } else if (marca.getData().getCol() > 1) {
+                    marca = marca.getPrev();
+
                 }
-                break;
-            case 83: case 40:
+            }
+            case 83, 40 -> {
 //                System.out.println("Abajo");
-                if (marcaPos==2){
-                    marcaPos=1;
-                } else if (marca.row!=9) {
-                    marcaPos=2;
-                    marca=matriz.getNodo(marca.row).getData().getNodo(marca.col-1).getData();
+                if ((marca.getData().getRow() <= 9)) {
+                    if ((marcaPos == 4) && (marca.getData().getRow() < 9) && (marca.getData().getCol() == 9)) {
+                        marcaRow = marcaRow.getNext();
+                        int marcaCol = marca.getData().getCol();
+                        marca = marcaRow.getData().getNodo(marcaCol - 1);
+                    } else if (marcaPos != 1) {
+                        marcaPos = 1;
+                    } else if (marca.getData().getRow() == 9) {
+                        marcaPos = 3;
+                    } else if (marcaPos != 2) {
+                        marcaPos = 2;
+                        marcaRow = marcaRow.getNext();
+                        int marcaCol = marca.getData().getCol();
+                        marca = marcaRow.getData().getNodo(marcaCol - 1);
+                    }
                 }
-                break;
-            case 68: case 39:
+            }
+            case 68, 39 -> {
 //                System.out.println("Derecha");
-                if (marca.col!=9){
-                    marca.getCoords();
-                    System.out.println(marca);
-                    marca= (Cuadrante) marca.getNext();
-                    System.out.println(marca);
-                    //marca.getCoords();
+                if (marca.getData().getCol() < 9) {
+                    marca = marca.getNext();
+                } else if (marca.getData().getCol() == 9) {
+                    marcaPos = 4;
                 }
-                break;
-            case 10: case 32:
-//                System.out.println("Seleccionar");
-                break;
+            }
+            case 10, 32 -> {
+                System.out.println("Seleccionar");
+            }
+//
         }
         //System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
-        mark(marca,marcaPos,Color.CYAN);
-
+        mark(marca.getData(), marcaPos, Color.CYAN);
     }
     @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println("("+e.getX()+","+e.getY()+")");
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
+    public void run() {
+        System.out.println("asrjnsj nadj");
+        //update(this.getGraphics());
+        //repaint();
 
     }
 }

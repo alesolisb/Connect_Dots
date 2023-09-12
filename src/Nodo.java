@@ -13,7 +13,6 @@ public class Nodo <T>{
     public Nodo() {
 
     }
-
     public T getData() {
         return data;
     }

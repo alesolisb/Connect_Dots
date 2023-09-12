@@ -45,7 +45,7 @@ public class Cuadrante extends Nodo<Cuadrante>{
     }
 
     public int getRow() {
-        return row;
+        return this.row;
     }
 
     public void setRow(int row) {
@@ -53,7 +53,7 @@ public class Cuadrante extends Nodo<Cuadrante>{
     }
 
     public int getCol() {
-        return col;
+        return this.col;
     }
 
     public void setCol(int col) {
@@ -61,7 +61,7 @@ public class Cuadrante extends Nodo<Cuadrante>{
     }
 
     public Player getOwner() {
-        return owner;
+        return this.owner;
     }
 
     public void setOwner(Player owner) {
@@ -69,21 +69,21 @@ public class Cuadrante extends Nodo<Cuadrante>{
     }
 
     public boolean isOwned() {
-        return isOwned;
+        return this.isOwned;
     }
 
     public void setOwned(boolean owned) {
-        isOwned = owned;
+        this.isOwned = owned;
     }
 
     public String getCoords(){
-         return "("+this.row+","+this.col+")";
+         return "("+this.col+","+this.row+")";
      }
-//    public Cuadrante getNext() {return this.next;}
+    //public Cuadrante getNext() {return next;}
 
     public void setNext(Cuadrante nodo) {this.next = nodo;}
 
-//    public Cuadrante getPrev() {return this.prev;}
+    //public Cuadrante getPrev() {return prev;}
 
     public void setPrev(Cuadrante prev) {this.prev = prev;}
 
