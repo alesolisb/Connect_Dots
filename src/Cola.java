@@ -1,8 +1,9 @@
-public class Cola {
-    private Lista<Player> cola;
-    public void enqueue(Player x){this.cola.insertLast(x);}
-    public Player dequeue(){return this.cola.deleteFirst().getData();}
-    public Player peek(){return this.cola.getHead().getData();}
-
+public class Cola extends Lista<Player>{
+    public void enqueue(Player x){insertLast(x);}
+    public Player dequeue(){return deleteFirst().getData();}
+    public Player peek(){return getHead().getData();}
+    public void requeue(){
+        enqueue(dequeue());
+    }
 
 }

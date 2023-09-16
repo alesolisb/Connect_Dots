@@ -22,7 +22,7 @@ public class Cliente extends JFrame implements MouseListener, KeyListener,Runnab
          this.addKeyListener(this);
 
 
-         p=new Player("Ale",Color.BLUE);
+         //p=new Player("Ale",Color.BLUE);
 
 
          infoPanel=new JPanel(new FlowLayout());

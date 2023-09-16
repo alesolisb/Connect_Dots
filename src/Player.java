@@ -2,38 +2,43 @@ import java.awt.Color;
 
 public class Player {
     public Color color;
+
+    public Color highlight;
     public String nick;
     public int score;
-    public Player(String nick,Color color){
+    public Player(String nick,Color color,Color highlight){
         this.nick=nick;
         this.color=color;
+        this.highlight=highlight;
         this.score=0;
     }
 
     public Color getColor() {
         return color;
     }
-
     public void setColor(Color color) {
         this.color = color;
     }
-
     public String getNick() {
         return nick;
     }
-
     public void setNick(String nick) {
         this.nick = nick;
     }
 
-    public int getScore() {
-        return score;
+    public Color getHighlight() {
+        return highlight;
     }
-
+    public void setHighlight(Color highlight) {
+        this.highlight = highlight;
+    }
+    public int getScore() {
+        return this.score;
+    }
     public void setScore(int score) {
-        score = score;
+        this.score = score;
     }
     public void addScore(int x){
-        score=score+x;
+        this.score=this.score+x;
     }
 }

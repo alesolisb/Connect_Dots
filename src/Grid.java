@@ -8,6 +8,9 @@ public class Grid extends JPanel{
     public Nodo<Cuadrante> marca;
     public Nodo<Lista<Cuadrante>> marcaRow;
     public int marcaPos;
+    public Graphics2D g2d;
+    Cola cola;
+    Player turno;
     Grid(int x, int y, int width, int height){
         this.setLayout(new GridLayout(10,10));
         this.setBounds(x,y,width,height);
@@ -49,6 +52,18 @@ public class Grid extends JPanel{
         marca = marcaRow.getData().getHead();
         marcaPos = 1;
 
+        Player p1 = new Player("UNO", new Color(0,0,255),new Color(0,0,255,100));
+        Player p2 = new Player("DOS", new Color(0,255,0),new Color(0,255,0,100));
+        Player p3 = new Player("TRES", new Color(255,0,0),new Color(255,0,0,100));
+
+        cola = new Cola();
+
+        cola.enqueue(p1);
+        cola.enqueue(p2);
+        cola.enqueue(p3);
+
+        turno=cola.getHead().getData();
+
         /*for (int i=1; i<(matriz.getSize()+1);i++){
             marca= marcaRow.getData().getHead();
             for (int j = 1; j < 10; j++) {
@@ -64,23 +79,27 @@ public class Grid extends JPanel{
     }
     @Override
     public void paint(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
+        g2d = (Graphics2D) g;
         g2d.setPaintMode();
         g2d.setBackground(Color.WHITE);
-        g2d.setPaint(Color.BLUE);
+//        g2d.setPaint(turno.getColor());
         g2d.setStroke(new BasicStroke(6));
         for (int i=1; i<(matriz.getSize()+1);i++){
             for (int j = 1; j < 10; j++) {
                 Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
                 //Cuadrante cuad = marca.getData();
                 if (cuad.getTop().isOwned()) {
-                    g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
+                    drawSide(cuad.getTop(),cuad.getTop().getOwner().getColor());
+                    //g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
                 } if (cuad.getBot().isOwned()) {
-                    g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
+                    //g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
+                    drawSide(cuad.getBot(),cuad.getBot().getOwner().getColor());
                 } if (cuad.getLeft().isOwned()) {
-                    g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
+                    drawSide(cuad.getLeft(),cuad.getLeft().getOwner().getColor());
+                    //g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
                 } if (cuad.getRight().isOwned()) {
-                    g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
+                    drawSide(cuad.getRight(),cuad.getRight().getOwner().getColor());
+                    //g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
                 }
             }
         }
@@ -96,7 +115,7 @@ public class Grid extends JPanel{
         g2d.dispose();
 
     }
-    public void mark(Cuadrante cuad,int side, Color color){
+    public void mark(Cuadrante cuad,int side){
         for (int i=1; i<(matriz.getSize()+1);i++){
             for (int j = 1; j < 10; j++) {
                 matriz.getNodo(i-1).getData().getNodo(j-1).getData().marked=null;
@@ -125,21 +144,19 @@ public class Grid extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Linea linea = marca.getData().getMarked();
-        Graphics2D g2d =(Graphics2D) this.getGraphics();
-        g2d.setColor(Color.CYAN);
+        g2d =(Graphics2D) this.getGraphics();
+        g2d.setColor(turno.getHighlight());
         g2d.setStroke(new BasicStroke(6));
         g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
 
     }
-    public void drawLine(Linea linea, Color color) {
-        Graphics g = getGraphics();
-        if (g instanceof Graphics2D g2d) {
-            g2d.setPaint(color);
-            g2d.setStroke(new BasicStroke(6));
-            g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
+    public void drawSide(Linea linea, Color color) {
+        g2d.setPaint(color);
+        g2d.setStroke(new BasicStroke(6));
+        g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
         }
+    public void
 
-    }
     /*
     w       87
     a       65
@@ -214,17 +231,36 @@ public class Grid extends JPanel{
                 //System.out.println("Seleccionar");
                 Cuadrante cuad = marca.getData();
                 switch (marcaPos) {
-                    case 1 -> cuad.getLeft().setOwned(true);
-                    case 2 -> cuad.getTop().setOwned(true);
-                    case 3 -> cuad.getBot().setOwned(true);
-                    case 4 -> cuad.getRight().setOwned(true);
+                    case 1:
+                        cuad.getLeft().setOwned(true);
+                        cuad.getLeft().setOwner(turno);
+                        cuad.getLeft().setMarked(false);
+                        break;
+                    case 2:
+                        cuad.getTop().setOwned(true);
+                        cuad.getTop().setOwner(turno);
+                        cuad.getTop().setMarked(false);
+                        break;
+                    case 3:
+                        cuad.getBot().setOwned(true);
+                        cuad.getBot().setOwner(turno);
+                        cuad.getBot().setMarked(false);
+                        break;
+                    case 4:
+                        cuad.getRight().setOwned(true);
+                        cuad.getRight().setOwner(turno);
+                        cuad.getRight().setMarked(false);
+                        break;
                 }
+                g2d.setPaint(turno.getColor());
+                cola.requeue();
+                turno= cola.getHead().getData();
 
 //                marca.getData().getMarked();
             }
 //
         }
         //System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
-        mark(marca.getData(), marcaPos, Color.CYAN);
+        mark(marca.getData(), marcaPos);
     }
 }
