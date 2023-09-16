@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.io.*;
+import java.net.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class Cliente extends JFrame implements MouseListener, KeyListener,Runnable {
      final int WIDTH = 900;
@@ -35,6 +37,8 @@ public class Cliente extends JFrame implements MouseListener, KeyListener,Runnab
          this.add(gridPanel);
          //this.pack();
          this.setVisible(true);
+
+
      }
 
     @Override
@@ -89,7 +93,24 @@ public class Cliente extends JFrame implements MouseListener, KeyListener,Runnab
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        System.out.println(e.getKeyChar()+"  "+ e.getKeyCode());
+
+        try {
+            Socket socket = new Socket("127.0.0.1", 12345); // Cambia el puerto si es necesario
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+
+            int keyCode = e.getKeyCode();
+            KeyEventMessage keyEventMessage = new KeyEventMessage(keyCode);
+
+            // Enviar el evento al servidor en formato JSON
+            out.println(keyEventMessage.toJson());
+
+            socket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        //System.out.println(e.getKeyCode());
         gridPanel.navegar(e.getKeyCode());
 
     }
@@ -98,4 +119,7 @@ public class Cliente extends JFrame implements MouseListener, KeyListener,Runnab
     public void keyReleased(KeyEvent e) {
 
     }
+
+
+
 }
