@@ -1,6 +1,6 @@
 import java.awt.*;
-
-public class Linea{
+import java.io.Serializable;
+public class Linea implements Serializable{
     public Player owner;
     public boolean isOwned;
     public boolean isMarked;

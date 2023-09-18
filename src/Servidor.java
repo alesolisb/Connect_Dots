@@ -16,7 +16,7 @@ public class Servidor {
     }
 }
 
-class MarcoServidor extends JFrame implements MouseListener, KeyListener, Runnable {
+class MarcoServidor extends JFrame implements Runnable {
 
     public MarcoServidor(){
 
@@ -26,21 +26,23 @@ class MarcoServidor extends JFrame implements MouseListener, KeyListener, Runnab
 
         Grid gridPanel;
 
-        JPanel infoPanel;
+        //JPanel infoPanel;
+
+        this.setSize(WIDTH, HEIGHT);
 
         setBounds(0,0,1000,1000);
 
-        infoPanel=new JPanel(new FlowLayout());
+        //infoPanel=new JPanel(new FlowLayout());
 
         //infoPanel.setSize(new Dimension(WIDTH,HEIGHT-WIDTH));
 
-        infoPanel.setBounds(0,0,WIDTH,HEIGHT-WIDTH);
+//        infoPanel.setBounds(0,0,WIDTH,HEIGHT-WIDTH);
 
-        infoPanel.setBackground(Color.black);
+        //infoPanel.setBackground(Color.white);
 
         gridPanel= new Grid(0,HEIGHT-WIDTH,WIDTH,WIDTH);
 
-        this.add(infoPanel);
+        //this.add(infoPanel);
 
         this.add(gridPanel);
 
@@ -62,6 +64,10 @@ class MarcoServidor extends JFrame implements MouseListener, KeyListener, Runnab
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                ObjectOutputStream objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
+
+                // Enviar la instancia de Grid al cliente
+                objectOut.writeObject(gridPanel);
 
                 // Recibir el evento JSON del cliente
                 String jsonEvent = in.readLine();
@@ -80,50 +86,6 @@ class MarcoServidor extends JFrame implements MouseListener, KeyListener, Runnab
 
     @Override
     public void run() {
-
-
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-        //gridPanel.navegar(e.getKeyCode());
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
 
     }
 }

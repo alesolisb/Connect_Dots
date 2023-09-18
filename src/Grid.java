@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Grid extends JPanel{
+
+public class Grid extends JPanel implements Serializable{
     public Lista<Lista<Cuadrante>> matriz;
     public Nodo<Cuadrante> marca;
     public Nodo<Lista<Cuadrante>> marcaRow;
@@ -227,4 +229,5 @@ public class Grid extends JPanel{
         //System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
         mark(marca.getData(), marcaPos, Color.CYAN);
     }
+
 }
