@@ -1,3 +1,4 @@
+/*
 import com.google.gson.Gson;
 
 public class KeyEventMessage {
@@ -22,4 +23,4 @@ public class KeyEventMessage {
         Gson gson = new Gson();
         return gson.fromJson(json, KeyEventMessage.class);
     }
-}
+}*/
