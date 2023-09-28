@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="Connect_Dots:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Connect_Dots_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Connect_Dots.jar">
+        <element id="module-output" name="Connect_Dots" />
+      </element>
+      <element id="library" level="project" name="gson-2.8.2" />
+    </root>
+  </artifact>
+</component>

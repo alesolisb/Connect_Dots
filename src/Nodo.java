@@ -1,4 +1,6 @@
-public class Nodo <T>{
+import java.io.Serializable;
+
+public class Nodo <T> implements Serializable{
     private T data;
     protected Nodo<T> next;
 
