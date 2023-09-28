@@ -38,7 +38,7 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
-    public void addScore(int x){
-        this.score=this.score+x;
+    public void addScore(){
+        this.score=this.score+1;
     }
 }

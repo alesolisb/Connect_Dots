@@ -10,7 +10,7 @@ public class Grid extends JPanel{
     public int marcaPos;
     public Graphics2D g2d;
     Cola cola;
-    Player turno;
+    Player turno, p1, p2, p3;
     Grid(int x, int y, int width, int height){
         this.setLayout(new GridLayout(10,10));
         this.setBounds(x,y,width,height);
@@ -30,90 +30,57 @@ public class Grid extends JPanel{
             for (int j = 1; j < 10; j++) {
                 Lista<Cuadrante> row = matriz.getNodo(i-1).getData();
                 row.insertLast(new Cuadrante(i,j));
-                //System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getData().getCoords()+" ");
             }
-            //System.out.print("\n\n");
         }
 
-        /*for (int i=1; i<(matriz.getSize()+1);i++){
-            for (int j = 1; j < 9; j++) {
-                System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getNext().getData().getCoords()+" ");
-            }
-            System.out.print("\n");
-        }
-
-        for (int i=1; i<(matriz.getSize()+1);i++){
-            for (int j = 2; j < 10; j++) {
-                System.out.print(matriz.getNodo(i-1).getData().getNodo(j-1).getPrev().getData().getCoords()+" ");
-            }
-            System.out.print("\n");
-        }*/
         marcaRow = matriz.getHead();
         marca = marcaRow.getData().getHead();
         marcaPos = 1;
 
-        Player p1 = new Player("UNO", new Color(0,0,255),new Color(0,0,255,100));
-        Player p2 = new Player("DOS", new Color(0,255,0),new Color(0,255,0,100));
-        Player p3 = new Player("TRES", new Color(255,0,0),new Color(255,0,0,100));
+        p1 = new Player("UNO", new Color(0, 132, 236),new Color(0, 132, 236,100));
+        p2 = new Player("DOS", new Color(255, 145,0),new Color(255, 145,0,100));
+        p3 = new Player("TRES", new Color(140,0, 255),new Color(140,0,255, 100));
 
         cola = new Cola();
 
         cola.enqueue(p1);
         cola.enqueue(p2);
         cola.enqueue(p3);
-
         turno=cola.getHead().getData();
 
-        /*for (int i=1; i<(matriz.getSize()+1);i++){
-            marca= marcaRow.getData().getHead();
-            for (int j = 1; j < 10; j++) {
-                System.out.print(marca.getData().getCoords() + "  ");
-                marca=marca.getNext();
-            }
-            System.out.print("\n");
-            marcaRow = marcaRow.getNext();
-
-        }*/
-
-        //System.out.println(String.format("%d %d %d",marca.getData().getCol(),marca.getData().getRow(),marcaPos));
     }
     @Override
     public void paint(Graphics g){
-        g2d = (Graphics2D) g;
-        g2d.setPaintMode();
-        g2d.setBackground(Color.WHITE);
-//        g2d.setPaint(turno.getColor());
-        g2d.setStroke(new BasicStroke(6));
+//        System.out.println("Update");
+        this.g2d = (Graphics2D) g;
+        this.g2d.setPaintMode();
+        this.g2d.setBackground(Color.WHITE);
+        this.g2d.setStroke(new BasicStroke(6));
         for (int i=1; i<(matriz.getSize()+1);i++){
             for (int j = 1; j < 10; j++) {
                 Cuadrante cuad = matriz.getNodo(i-1).getData().getNodo(j-1).getData();
-                //Cuadrante cuad = marca.getData();
-                if (cuad.getTop().isOwned()) {
-                    drawSide(cuad.getTop(),cuad.getTop().getOwner().getColor());
-                    //g2d.drawLine(cuad.top.getX0(), cuad.top.getY0(), cuad.top.getX1(), cuad.top.getY1());
-                } if (cuad.getBot().isOwned()) {
-                    //g2d.drawLine(cuad.bot.getX0(), cuad.bot.getY0(), cuad.bot.getX1(), cuad.bot.getY1());
-                    drawSide(cuad.getBot(),cuad.getBot().getOwner().getColor());
-                } if (cuad.getLeft().isOwned()) {
-                    drawSide(cuad.getLeft(),cuad.getLeft().getOwner().getColor());
-                    //g2d.drawLine(cuad.left.getX0(), cuad.left.getY0(), cuad.left.getX1(), cuad.left.getY1());
-                } if (cuad.getRight().isOwned()) {
-                    drawSide(cuad.getRight(),cuad.getRight().getOwner().getColor());
-                    //g2d.drawLine(cuad.right.getX0(), cuad.right.getY0(), cuad.right.getX1(), cuad.right.getY1());
+                if (cuad.isOwned()) {
+                    paintCuad(cuad, cuad.getOwner().getColor());
+                }else {
+                        if (cuad.getTop().isOwned()) {drawSide(cuad.getTop(),cuad.getTop().getOwner().getColor());}
+
+                        if (cuad.getBot().isOwned()) {drawSide(cuad.getBot(),cuad.getBot().getOwner().getColor());}
+
+                        if (cuad.getLeft().isOwned()) {drawSide(cuad.getLeft(),cuad.getLeft().getOwner().getColor());}
+
+                        if (cuad.getRight().isOwned()){drawSide(cuad.getRight(),cuad.getRight().getOwner().getColor());}
+                    }
                 }
             }
-        }
-        g2d.setPaint(Color.black);
-        g2d.setStroke(new BasicStroke(1));
-        g2d.drawRect(0,0,WIDTH,HEIGHT);
+        this.g2d.setPaint(Color.black);
+        this.g2d.setStroke(new BasicStroke(1));
+        this.g2d.drawRect(0,0,WIDTH,HEIGHT);
         for (int i=1; i<=10;i++){
             for (int j = 1; j <= 10; j++) {
-                g2d.fillRect((80*j),(80*i),6,6);
+                this.g2d.fillRect((80*j),(80*i),6,6);
             }
         }
-
-        g2d.dispose();
-
+        this.g2d.dispose();
     }
     public void mark(Cuadrante cuad,int side){
         for (int i=1; i<(matriz.getSize()+1);i++){
@@ -135,7 +102,6 @@ public class Grid extends JPanel{
                 cuad.marked=cuad.right;
                 break;
         }
-        //drawLine(cuad.marked, color);
         paintComponent(this.getGraphics());
         update(this.getGraphics());
 
@@ -144,18 +110,21 @@ public class Grid extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Linea linea = marca.getData().getMarked();
-        g2d =(Graphics2D) this.getGraphics();
-        g2d.setColor(turno.getHighlight());
-        g2d.setStroke(new BasicStroke(6));
-        g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
+        this.g2d =(Graphics2D) this.getGraphics();
+        this.g2d.setColor(turno.getHighlight());
+        this.g2d.setStroke(new BasicStroke(6));
+        this.g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
 
     }
     public void drawSide(Linea linea, Color color) {
-        g2d.setPaint(color);
-        g2d.setStroke(new BasicStroke(6));
-        g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
+        this.g2d.setPaint(color);
+        this.g2d.setStroke(new BasicStroke(6));
+        this.g2d.drawLine(linea.getX0(), linea.getY0(), linea.getX1(), linea.getY1());
         }
-    public void
+    public void paintCuad(Cuadrante cuad, Color color){
+        this.g2d.setPaint(color);
+        this.g2d.fillRect(cuad.getTop().getX0(),cuad.getTop().getY0(),80,80);
+    }
 
     /*
     w       87
@@ -229,38 +198,160 @@ public class Grid extends JPanel{
             }
             case 10, 32 -> {
                 //System.out.println("Seleccionar");
+                boolean gotPoint= false;
                 Cuadrante cuad = marca.getData();
-                switch (marcaPos) {
-                    case 1:
-                        cuad.getLeft().setOwned(true);
-                        cuad.getLeft().setOwner(turno);
-                        cuad.getLeft().setMarked(false);
-                        break;
-                    case 2:
-                        cuad.getTop().setOwned(true);
-                        cuad.getTop().setOwner(turno);
-                        cuad.getTop().setMarked(false);
-                        break;
-                    case 3:
-                        cuad.getBot().setOwned(true);
-                        cuad.getBot().setOwner(turno);
-                        cuad.getBot().setMarked(false);
-                        break;
-                    case 4:
-                        cuad.getRight().setOwned(true);
-                        cuad.getRight().setOwner(turno);
-                        cuad.getRight().setMarked(false);
-                        break;
+                int col = marca.getData().getCol();
+                int row = marca.getData().getRow();
+                // VECINOS
+                Cuadrante cuadLeft = null;
+                Cuadrante cuadUp = null;
+                Cuadrante cuadDown = null;
+                Cuadrante cuadRight = null;
+                if (row>1){
+                    cuadUp = marcaRow.getPrev().getData().getNodo(col - 1).getData();
                 }
-                g2d.setPaint(turno.getColor());
-                cola.requeue();
-                turno= cola.getHead().getData();
+                if (row<9){
+                    cuadDown = marcaRow.getNext().getData().getNodo(col - 1).getData();
+                }
+                if (col>1){
+                    cuadLeft = marca.getPrev().getData();
+                }
+                if (col<9){
+                    cuadRight = marca.getNext().getData();
+                }
+                switch (marcaPos) {
+                    case 1 -> {
+                        if (!cuad.getLeft().isOwned()) {
+                            cuad.getLeft().setOwned(true);
+                            cuad.getLeft().setOwner(turno);
+                            cuad.getLeft().setMarked(false);
+                            cuad.numSelec++;
+                            if (cuadLeft != null) {
+                                cuadLeft.getRight().setOwner(turno);
+                                cuadLeft.getRight().setOwned(true);
+                                cuadLeft.numSelec++;
+                            }
+                        }
+                    }
+                    case 2 -> {
+                        if (!cuad.getTop().isOwned()) {
+                            cuad.getTop().setOwned(true);
+                            cuad.getTop().setOwner(turno);
+                            cuad.getTop().setMarked(false);
+                            cuad.numSelec++;
+                            if (cuadUp != null) {
+                                cuadUp.getBot().setOwner(turno);
+                                cuadUp.getBot().setOwned(true);
+                                cuadUp.numSelec++;
+                            }
+                        }
+                    }
+                    case 3 -> {
+                        if (!cuad.getBot().isOwned()) {
+                            cuad.getBot().setOwned(true);
+                            cuad.getBot().setOwner(turno);
+                            cuad.getBot().setMarked(false);
+                            cuad.numSelec++;
+                            if (cuadDown != null){
+                                cuadDown.getTop().setOwner(turno);
+                                cuadDown.getTop().setOwned(true);
+                                cuadDown.numSelec++;
+                            }
 
-//                marca.getData().getMarked();
+                        }
+                    }
+                    case 4 -> {
+                        if (!cuad.getRight().isOwned()) {
+                            cuad.getRight().setOwned(true);
+                            cuad.getRight().setOwner(turno);
+                            cuad.getRight().setMarked(false);
+                            cuad.numSelec++;
+                            if (cuadRight != null) {
+                                cuadRight.getLeft().setOwner(turno);
+                                cuadRight.getLeft().setOwned(true);
+                                cuadRight.numSelec++;
+                            }
+                        }
+                    }
+                }
+
+                System.out.println(cuad.getCoords() + cuad.getLeft().isOwned() + cuad.getTop().isOwned() + cuad.getBot().isOwned() + cuad.getRight().isOwned());
+
+                if (cuad.numSelec==4 && !cuad.isOwned()){
+                    cuad.getTop().setOwner(turno);
+                    cuad.getLeft().setOwner(turno);
+                    cuad.getBot().setOwner(turno);
+                    cuad.getRight().setOwner(turno);
+                    cuad.setOwned(true);
+                    cuad.setOwner(turno);
+                    gotPoint=true;
+                    turno.addScore();
+                    //System.out.println("Cuadrante " + cuad.getCoords() + " fue reclamado por " + turno.getNick());
+                }
+                if (cuadLeft != null) {
+                    if (cuadLeft.numSelec == 4 && !cuadLeft.isOwned()) {
+                        cuadLeft.getTop().setOwner(turno);
+                        cuadLeft.getLeft().setOwner(turno);
+                        cuadLeft.getBot().setOwner(turno);
+                        cuadLeft.getRight().setOwner(turno);
+                        cuadLeft.setOwned(true);
+                        cuadLeft.setOwner(turno);
+                        gotPoint=true;
+                        turno.addScore();
+                        //System.out.println("Cuadrante vecino izquierda" + cuadLeft.getCoords() + " fue reclamado por " + turno.getNick());
+                    }
+                }
+
+                if (cuadUp != null) {
+                    if (cuadUp.numSelec==4 && !cuadUp.isOwned()) {
+                        cuadUp.getTop().setOwner(turno);
+                        cuadUp.getLeft().setOwner(turno);
+                        cuadUp.getBot().setOwner(turno);
+                        cuadUp.getRight().setOwner(turno);
+                        cuadUp.setOwned(true);
+                        cuadUp.setOwner(turno);
+                        gotPoint=true;
+                        turno.addScore();
+                        //System.out.println("Cuadrante vecino arriba" + cuadUp.getCoords() + " fue reclamado por " + turno.getNick());
+                    }
+                }
+
+                if (cuadDown != null) {
+                    if (cuadDown.numSelec==4 && !cuadDown.isOwned()) {
+                        cuadDown.getTop().setOwner(turno);
+                        cuadDown.getLeft().setOwner(turno);
+                        cuadDown.getBot().setOwner(turno);
+                        cuadDown.getRight().setOwner(turno);
+                        cuadDown.setOwned(true);
+                        cuadDown.setOwner(turno);
+                        gotPoint=true;
+                        turno.addScore();
+                        //System.out.println("Cuadrante vecino abajo" + cuadDown.getCoords() + " fue reclamado por " + turno.getNick());
+                    }
+                }
+
+                if (cuadRight != null) {
+                    if (cuadRight.numSelec==4 && !cuadRight.isOwned()) {
+                        cuadRight.getTop().setOwner(turno);
+                        cuadRight.getLeft().setOwner(turno);
+                        cuadRight.getBot().setOwner(turno);
+                        cuadRight.getRight().setOwner(turno);
+                        cuadRight.setOwned(true);
+                        cuadRight.setOwner(turno);
+                        gotPoint=true;
+                        turno.addScore();
+                        //System.out.println("Cuadrante vecino derecha " + cuadRight.getCoords() + " fue reclamado por " + turno.getNick());
+                    }
+                }
+                if (!gotPoint){
+                    cola.requeue();
+                    turno=cola.getHead().getData();
+                }
+                System.out.println("UNO: " + p1.getScore());
+                System.out.println("DOS: " + p2.getScore());
+                System.out.println("TRES: " + p3.getScore());
             }
-//
         }
-        //System.out.println(String.format("%d %d %d",marca.col,marca.row,marcaPos));
         mark(marca.getData(), marcaPos);
     }
 }

@@ -5,5 +5,4 @@ public class Cola extends Lista<Player>{
     public void requeue(){
         enqueue(dequeue());
     }
-
 }
