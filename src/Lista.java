@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Lista<T> extends Nodo<T>{
+public class Lista<T> extends Nodo<T> implements Serializable{
     protected Nodo<T> head;
     protected Nodo<T> last;
     protected int size;

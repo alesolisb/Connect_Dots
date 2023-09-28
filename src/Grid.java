@@ -1,58 +1,46 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.io.Serializable;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.net.ServerSocket;
 
 public class Grid extends JPanel implements Serializable{
     public Lista<Lista<Cuadrante>> matriz;
     public Nodo<Cuadrante> marca;
     public Nodo<Lista<Cuadrante>> marcaRow;
     public int marcaPos;
-    public Graphics2D g2d;
+    public transient Graphics2D g2d;
+
     Cola cola;
     Player turno, p1, p2, p3;
     Grid(int x, int y, int width, int height){
         this.setLayout(new GridLayout(10,10));
         this.setBounds(x,y,width,height);
         this.setBackground(Color.white);
-        matriz = new Lista<>();
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-        matriz.insertLast(new Lista<>());
-
-        for (int i=1; i<(matriz.getSize()+1);i++){
-            for (int j = 1; j < 10; j++) {
-                Lista<Cuadrante> row = matriz.getNodo(i-1).getData();
-                row.insertLast(new Cuadrante(i,j));
-            }
-        }
-
-        marcaRow = matriz.getHead();
-        marca = marcaRow.getData().getHead();
-        marcaPos = 1;
-
-        p1 = new Player("UNO", new Color(0, 132, 236),new Color(0, 132, 236,100));
-        p2 = new Player("DOS", new Color(255, 145,0),new Color(255, 145,0,100));
-        p3 = new Player("TRES", new Color(140,0, 255),new Color(140,0,255, 100));
-
-        cola = new Cola();
-
-        cola.enqueue(p1);
-        cola.enqueue(p2);
-        cola.enqueue(p3);
-        turno=cola.getHead().getData();
+//
+//        p1 = new Player("UNO", new Color(0, 132, 236),new Color(0, 132, 236,100));
+//        p2 = new Player("DOS", new Color(255, 145,0),new Color(255, 145,0,100));
+//        p3 = new Player("TRES", new Color(140,0, 255),new Color(140,0,255, 100));
+//
+////
+//
+//        cola.enqueue(p1);
+//        cola.enqueue(p2);
+//        cola.enqueue(p3);
+//        turno=cola.getHead().getData();
 
     }
     @Override
     public void paint(Graphics g){
+        try {
+            ServerSocket serverSocket = new ServerSocket(9999);
+            
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        System.out.println("Update");
         this.g2d = (Graphics2D) g;
         this.g2d.setPaintMode();
