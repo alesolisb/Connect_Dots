@@ -1,10 +1,23 @@
-import java.util.ArrayList;
 import java.io.Serializable;
+
+/**
+ * Clase Lista que representa una lista enlazada genérica.
+ * Extiende la clase Nodo para gestionar los nodos de la lista.
+ * @param <T> Tipo de datos de la lista.
+ * @author Alejandro Solis Bolanos
+ * @author Fabian Gutierrez Jimenez
+ * @author Adrian Muñoz Alvarado
+ */
 
 public class Lista<T> extends Nodo<T> implements Serializable{
     protected Nodo<T> head;
     protected Nodo<T> last;
     protected int size;
+
+    /**
+     * Constructor de la clase Lista.
+     * Inicializa una lista vacía.
+     */
 
     public Lista(){
         this.head = null;
@@ -12,7 +25,18 @@ public class Lista<T> extends Nodo<T> implements Serializable{
         this.size= 0;
     }
 
+    /**
+     * Método para comprobar si la lista está vacía.
+     * @return true si la lista está vacía, false en caso contrario.
+     */
+
     public boolean isEmpty(){return this.head==null;}
+
+    /**
+     * Método para obtener el tamaño de la lista.
+     * @return El tamaño de la lista.
+     */
+
     public int getSize(){return this.size;}
     public void insertFirst(T data){
         Nodo<T> nodo = new Nodo<>(data);
@@ -137,6 +161,12 @@ public class Lista<T> extends Nodo<T> implements Serializable{
         return null;
 
     }
+
+    /**
+     * Método para obtener el primer nodo de la lista.
+     * @return El primer nodo de la lista.
+     */
+
     public Nodo<T> getHead(){
         return this.head;
     }
@@ -152,6 +182,11 @@ public class Lista<T> extends Nodo<T> implements Serializable{
         }
         return -1;
     }
+
+    /**
+     * Método para obtener el último nodo de la lista.
+     * @return El último nodo de la lista.
+     */
 
     public Nodo<T> getLast() {
         return this.last;
@@ -173,5 +208,4 @@ public class Lista<T> extends Nodo<T> implements Serializable{
             current = current.getNext();
         }
     }
-//    ArrayList<String> a = new ArrayList<>();
 }

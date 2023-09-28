@@ -3,12 +3,20 @@ import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.*;
-//import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * Clase Servidor que representa el servidor del juego.
+ * Esta clase se encarga de gestionar la lógica del juego y la comunicación con los clientes.
+ * Extiende JFrame y se ejecuta en un hilo separado.
+ *
+ * @author Alejandro Solis Bolanos
+ * @author Fabian Gutierrez Jimenez
+ * @author Adrian Muñoz Alvarado
+ */
 
 public class Servidor extends JFrame implements Runnable{
 
     final int WIDTH = 900;
-
     final int HEIGHT= 1000;
     S_Grid SGridPanel;
     public static Lista<Lista<Cuadrante>> matriz;
@@ -17,6 +25,11 @@ public class Servidor extends JFrame implements Runnable{
     public static int  marcaPos;
     public static Player turno;
     static Cola cola;
+
+    /**
+     * Constructor de la clase Servidor.
+     * Configura la interfaz gráfica y crea un panel de juego.
+     */
 
     Servidor(){
         this.setSize(WIDTH, HEIGHT);
@@ -36,6 +49,16 @@ public class Servidor extends JFrame implements Runnable{
 
     }
 }
+
+/**
+ * Clase S_Grid que representa el panel de juego en el servidor.
+ * Esta clase se encarga de dibujar el tablero de juego y gestionar la lógica del juego.
+ * Extiende JPanel y se ejecuta en un hilo separado.
+ *
+ * @author Alejandro Solis Bolanos
+ * @author Fabian Gutierrez Jimenez
+ * @author Adrian Muñoz Alvarado
+ */
 
 class S_Grid extends JPanel implements Serializable, Runnable{
     public Lista<Lista<Cuadrante>> matriz;
@@ -204,7 +227,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
         System.out.println(key);
         switch (key) {
             case 87, 38 -> {
-//                System.out.println("Arriba");
                 if ((marca.getData().getRow() >= 1)) {
                     if ((marcaPos == 4) && (marca.getData().getRow() > 1) && (marca.getData().getCol() == 9)) {
                         marcaRow = marcaRow.getPrev();
@@ -223,7 +245,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                 }
             }
             case 65, 37 -> {
-//                System.out.println("Izquierda");
                 if (marcaPos == 4) {
                     marcaPos = 1;
                 } else if (marca.getData().getCol() > 1) {
@@ -232,7 +253,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                 }
             }
             case 83, 40 -> {
-//                System.out.println("Abajo");
                 if ((marca.getData().getRow() <= 9)) {
                     if ((marcaPos == 4) && (marca.getData().getRow() < 9) && (marca.getData().getCol() == 9)) {
                         marcaRow = marcaRow.getNext();
@@ -337,9 +357,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                         }
                     }
                 }
-
-                //System.out.println(cuad.getCoords() + cuad.getLeft().isOwned() + cuad.getTop().isOwned() + cuad.getBot().isOwned() + cuad.getRight().isOwned());
-
                 if (cuad.numSelec==4 && !cuad.isOwned()){
                     cuad.getTop().setOwner(turno);
                     cuad.getLeft().setOwner(turno);
@@ -349,7 +366,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                     cuad.setOwner(turno);
                     gotPoint=true;
                     turno.addScore();
-                    //System.out.println("Cuadrante " + cuad.getCoords() + " fue reclamado por " + turno.getNick());
                 }
                 if (cuadLeft != null) {
                     if (cuadLeft.numSelec == 4 && !cuadLeft.isOwned()) {
@@ -361,7 +377,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                         cuadLeft.setOwner(turno);
                         gotPoint=true;
                         turno.addScore();
-                        //System.out.println("Cuadrante vecino izquierda" + cuadLeft.getCoords() + " fue reclamado por " + turno.getNick());
                     }
                 }
 
@@ -375,7 +390,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                         cuadUp.setOwner(turno);
                         gotPoint=true;
                         turno.addScore();
-                        //System.out.println("Cuadrante vecino arriba" + cuadUp.getCoords() + " fue reclamado por " + turno.getNick());
                     }
                 }
 
@@ -403,7 +417,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                         cuadRight.setOwner(turno);
                         gotPoint=true;
                         turno.addScore();
-                        //System.out.println("Cuadrante vecino derecha " + cuadRight.getCoords() + " fue reclamado por " + turno.getNick());
                     }
                 }
                 if (!gotPoint){
@@ -433,7 +446,6 @@ class S_Grid extends JPanel implements Serializable, Runnable{
                     marca=mensaje.getMarca();
                     marcaRow=mensaje.getMarcaRow();
                     marcaPos= mensaje.getMarcaPos();
-                    //System.out.println("Recibido: " + mensaje.getKeycode());
                     this.navegar(mensaje.getKeycode());
 
                 }else{

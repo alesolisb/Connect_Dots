@@ -10,12 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66c1878a-c8bf-467d-819b-8651456869ea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Mensaje.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KeyEventMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KeyEventMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cola.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cola.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cuadrante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cuadrante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Grid.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KeyEventMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Linea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Linea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lista.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Mensaje.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mensaje.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Nodo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Nodo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servidor.java" afterDir="false" />
     </list>
@@ -55,9 +61,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "game",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Program Files/Java/jdk-20/lib/jackson-core-2.15.2.jar",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "configurable.group.appearance"

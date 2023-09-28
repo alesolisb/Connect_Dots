@@ -1,3 +1,11 @@
+/**
+ * Clase Cuadrante que representa un cuadrante en el juego Connect Dots.
+ * Extiende la clase Nodo para su gestión en listas enlazadas.
+ * @author Alejandro Solis Bolanos
+ * @author Fabian Gutierrez Jimenez
+ * @author Adrian Muñoz Alvarado
+ */
+
 public class Cuadrante extends Nodo<Cuadrante>{
     public int row;
     public int col;
@@ -11,6 +19,13 @@ public class Cuadrante extends Nodo<Cuadrante>{
     public Player owner;
     public boolean isOwned;
     public int numSelec;
+
+    /**
+     * Constructor de la clase Cuadrante.
+     * @param row Fila del cuadrante.
+     * @param col Columna del cuadrante.
+     */
+
     Cuadrante(int row, int col){
          this.next = null;
          this.prev = null;
@@ -25,7 +40,6 @@ public class Cuadrante extends Nodo<Cuadrante>{
          this.isOwned = false;
          this.numSelec = 0;
     }
-
     public Linea getTop() {
         return this.top;
     }
@@ -78,14 +92,26 @@ public class Cuadrante extends Nodo<Cuadrante>{
         this.isOwned = owned;
     }
 
+    /**
+     * Obtiene las coordenadas del cuadrante en formato "(col,row)".
+     * @return Las coordenadas del cuadrante.
+     */
+
     public String getCoords(){
          return "("+this.col+","+this.row+")";
      }
-    //public Cuadrante getNext() {return next;}
+
+    /**
+     * Establece el nodo siguiente al cuadrante en una lista enlazada.
+     * @param nodo El cuadrante siguiente.
+     */
 
     public void setNext(Cuadrante nodo) {this.next = nodo;}
 
-    //public Cuadrante getPrev() {return prev;}
+    /**
+     * Establece el nodo previo al cuadrante en una lista enlazada.
+     * @param prev El cuadrante previo.
+     */
 
     public void setPrev(Cuadrante prev) {this.prev = prev;}
 

@@ -1,5 +1,14 @@
 import java.awt.*;
 import java.io.Serializable;
+
+/**
+ * Clase Linea que representa una línea en el juego Connect Dots.
+ * Implementa Serializable para permitir la serialización de objetos.
+ * @author Alejandro Solis Bolanos
+ * @author Fabian Gutierrez Jimenez
+ * @author Adrian Muñoz Alvarado
+ */
+
 public class Linea implements Serializable{
     public Player owner;
     public boolean isOwned;
@@ -11,6 +20,13 @@ public class Linea implements Serializable{
     public int y0;
     public int x1;
     public int y1;
+
+    /**
+     * Constructor de la clase Linea.
+     * @param pos Posición de la línea (1: izquierda, 2: arriba, 3: abajo, 4: derecha).
+     * @param row Fila de la línea.
+     * @param col Columna de la línea.
+     */
 
     Linea(int pos, int row, int col){
         this.owner= null;
@@ -47,8 +63,14 @@ public class Linea implements Serializable{
         }
     }
 
+
     public Player getOwner(){return this.owner;}
     public void setMarked(boolean marked){this.isMarked = marked;}
+
+    /**
+     * Establece el jugador propietario de la línea y marca que está siendo propiedad de un jugador.
+     * @param owner El jugador propietario de la línea.
+     */
 
     public void setOwner(Player owner) {
         this.owner = owner;
