@@ -10,6 +10,7 @@ public class Cuadrante extends Nodo<Cuadrante>{
     public Linea marked;
     public Player owner;
     public boolean isOwned;
+    public int numSelec;
     Cuadrante(int row, int col){
          this.next = null;
          this.prev = null;
@@ -22,6 +23,7 @@ public class Cuadrante extends Nodo<Cuadrante>{
          this.owner = null;
          this.marked = null;
          this.isOwned = false;
+         this.numSelec = 0;
     }
 
     public Linea getTop() {
@@ -87,4 +89,11 @@ public class Cuadrante extends Nodo<Cuadrante>{
 
     public void setPrev(Cuadrante prev) {this.prev = prev;}
 
+    public int getNumSelec() {
+        return numSelec;
+    }
+
+    public void setNumSelec(int numSelec) {
+        this.numSelec = numSelec;
+    }
 }

@@ -152,6 +152,10 @@ public class Lista<T> extends Nodo<T>{
         return -1;
     }
 
+    public Nodo<T> getLast() {
+        return this.last;
+    }
+
     public Nodo<T> find(Object x){
         Nodo<T> current = this.head;
         while (current !=null){
